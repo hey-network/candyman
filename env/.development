@@ -1,0 +1,5 @@
+SIDECHAIN_ENDPOINT=http://localhost:46658
+KARMA_CONTRACT_ADDRESS=0x9635629f2a2f976bd18CE51B83481Ca406F55a03
+ROSSIGNOL_GETTER_ENDPOINT=https://gu2e48i3kl.execute-api.eu-central-1.amazonaws.com/staging/RossignolGetterStaging
+ROSSIGNOL_GETTER_API_KEY=r3B6Da5usv2I3aLi6zXvf1Zm7iP3Oo067c66jCB4
+QUEUE_NAME=task_queue
