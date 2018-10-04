@@ -1,14 +1,16 @@
 import Web3 from 'web3';
-import { asciiToHex, ERRORS } from '../helpers/utils';
+import logger from '../helpers/logger';
+import { asciiToHex } from '../helpers/utils';
 
 const {
+  createJSONRPCClient,
   NonceTxMiddleware,
   SignedTxMiddleware,
   Client,
   LocalAddress,
   CryptoUtils,
-  LoomProvider,
-} = require('loom-js/dist');
+  LoomProvider
+} = require('loom-js');
 
 const { SIDECHAIN_ENDPOINT, KARMA_CONTRACT_ADDRESS } = process.env;
 const ABI = require('./KarmaStore.json').abi;
@@ -18,10 +20,11 @@ export default class KarmaStoreManager {
     const privateKey = CryptoUtils.B64ToUint8Array(b64PrivateKey);
     const publicKey = CryptoUtils.publicKeyFromPrivateKey(privateKey);
 
+
     const client = new Client(
       'default',
-      `${SIDECHAIN_ENDPOINT}/websocket`,
-      `${SIDECHAIN_ENDPOINT}/queryws`,
+      createJSONRPCClient({ protocols: [{ url: `${SIDECHAIN_ENDPOINT}/rpc` }] }),
+      createJSONRPCClient({ protocols: [{ url: `${SIDECHAIN_ENDPOINT}/query` }] })
     );
 
     // required middleware
@@ -34,8 +37,8 @@ export default class KarmaStoreManager {
     const web3 = new Web3(new LoomProvider(client, privateKey));
 
     client.on('error', (msg) => {
-      console.error('Error on connect to client', msg);
-      console.warn('Please verify if loom command is running');
+      logger.error('Error on connect to client', msg);
+      logger.error('Please verify if loom command is running');
     });
 
     const contract = new web3.eth.Contract(
@@ -75,24 +78,6 @@ export default class KarmaStoreManager {
   }
 
   async rewardAsync(to, action) {
-    try {
-      await this.contract.methods.reward(to, asciiToHex(action)).send({ from: this.from });
-    } catch (err) {
-      if (err.toString().includes(404)) {
-        console.log('\x1b[31m', '⛔   Reward transaction FAILED and CANCELLED: Address does not exist in Rossignol DB');
-      } else {
-        let message;
-        if (err.toString().includes(502)) {
-          message = 'Rossignol 502 server error, check Lambda CloudWatch logs';
-        } else if (
-          err.toString().includes(ERRORS.already_in_cache)
-          || err.toString().includes(ERRORS.already_subscribed)
-        ) {
-          message = 'Too many similar simultaneous transactions';
-        }
-        console.log('\x1b[31m', `⛔   Reward transaction FAILED and BOUNCED: ${message}`);
-        throw err;
-      }
-    }
+    return this.contract.methods.reward(to, asciiToHex(action)).send({ from: this.from });
   }
 }
