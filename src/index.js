@@ -8,7 +8,7 @@ amqp.connect(QUEUE_ENDPOINT, function(err, connection) {
   connection.createChannel(function(err, channel) {
     const queue = process.env.QUEUE_NAME
 
-    channel.assertQueue(q, { durable: true })
+    channel.assertQueue(queue, { durable: true })
     channel.prefetch(1)
 
     console.log('\x1b[32m', '💡   Waiting for messages...To exit press CTRL+C')
