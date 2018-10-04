@@ -4,23 +4,23 @@ import { KarmaStoreManager } from './contracts/karmaStoreManager'
 
 const QUEUE_ENDPOINT = process.env.QUEUE_ENDPOINT
 
-amqp.connect(QUEUE_ENDPOINT, function(err, conn) {
-  conn.createChannel(function(err, ch) {
-    const q = process.env.QUEUE_NAME
+amqp.connect(QUEUE_ENDPOINT, function(err, connection) {
+  connection.createChannel(function(err, channel) {
+    const queue = process.env.QUEUE_NAME
 
-    ch.assertQueue(q, { durable: true })
-    ch.prefetch(1)
+    channel.assertQueue(q, { durable: true })
+    channel.prefetch(1)
 
     console.log('\x1b[32m', '💡   Waiting for messages...To exit press CTRL+C')
     console.log('\x1b[0m', '\n')
 
-    ch.consume(q, async function(msg) {
+    channel.consume(queue, async function(msg) {
       try {
         await handleMessage(msg)
-        ch.ack(msg)
+        channel.ack(msg)
       } catch (err) {
         console.log(err.toString())
-        ch.nack(msg)
+        channel.nack(msg)
       }
     }, { noAck: false })
   })
