@@ -1,7 +1,8 @@
-/* eslint-disable no-console */
 import amqp from 'amqplib/callback_api';
 import getPrivateKey from './helpers/rossignol';
 import KarmaStoreManager from './contracts/karmaStoreManager';
+import logger from './helpers/logger';
+import { isAddress } from './helpers/utils';
 
 const { QUEUE_ENDPOINT } = process.env;
 
@@ -15,10 +16,13 @@ function extractMessageParams(msg) {
 
   const [from, to, action] = message.split(' ');
 
-  console.log('\x1b[32m', '💌   Received a new message!');
-  console.log('\x1b[34m', '💁‍♂️   User rewarding (FROM):', from);
-  console.log('\x1b[35m', '🙋‍♀️   User rewarded (TO):', to);
-  console.log('\x1b[36m', '💎   Action:', action);
+  if (!isAddress(from)) throw new Error('Invalid FROM address');
+  if (!isAddress(to)) throw new Error('Invalid TO address');
+  if (from === to) throw new Error('Identical FROM and TO address');
+
+  logger.debug(`User rewarding: ${from}`);
+  logger.debug(`User rewarded: ${to}`);
+  logger.debug(`Action: ${action}`);
 
   return { from, to, action };
 }
@@ -26,10 +30,9 @@ function extractMessageParams(msg) {
 async function processRequest({ from, to, action }) {
   const karmaStore = await getKarmaStoreManager(from);
   await karmaStore.rewardAsync(to, action);
-  const newBalance = await karmaStore.getIncrementalKarmaAsync(to);
+  const balance = await karmaStore.getIncrementalKarmaAsync(to);
 
-  console.log('\x1b[33m', '💰   The rewarded user karma balance is now:', newBalance);
-  console.log('\x1b[0m', '\n');
+  logger.info(`Rewarded user karma balance is now: ${balance}`);
 }
 
 async function handleMessage(msg) {
@@ -44,15 +47,15 @@ amqp.connect(QUEUE_ENDPOINT, (connErr, connection) => {
     channel.assertQueue(queue, { durable: true });
     channel.prefetch(1);
 
-    console.log('\x1b[32m', '💡   Waiting for messages...To exit press CTRL+C');
-    console.log('\x1b[0m', '\n');
+    logger.info(`Listening for messages on queue ${queue} from ${QUEUE_ENDPOINT}`);
 
     channel.consume(queue, async (msg) => {
       try {
+        logger.info(`Received message: ${msg.content.toString()}`);
         await handleMessage(msg);
         channel.ack(msg);
       } catch (err) {
-        console.log(err.toString());
+        logger.error(err.toString());
         channel.nack(msg);
       }
     }, { noAck: false });

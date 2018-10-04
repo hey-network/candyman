@@ -8,3 +8,5 @@ export const ERRORS = {
 export const asciiToHex = string => Web3.utils.asciiToHex(string);
 
 export const toBigNumber = number => Web3.utils.toBN(number);
+
+export const isAddress = address => Web3.utils.isAddress(address);
