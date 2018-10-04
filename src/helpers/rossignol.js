@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const ENDPOINT = process.env.ROSSIGNOL_GETTER_ENDPOINT
-const API_KEY  = process.env.ROSSIGNOL_GETTER_API_KEY
+const API_KEY = process.env.ROSSIGNOL_GETTER_API_KEY
 
 const buildURL = (address) => `${ENDPOINT}?address=${address}`
 
