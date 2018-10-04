@@ -1,22 +1,24 @@
-import axios from 'axios'
+import axios from 'axios';
 
-const ENDPOINT = process.env.ROSSIGNOL_GETTER_ENDPOINT
-const API_KEY = process.env.ROSSIGNOL_GETTER_API_KEY
+const {
+  ROSSIGNOL_GETTER_ENDPOINT,
+  ROSSIGNOL_GETTER_API_KEY
+}  = process.env;
 
-const buildURL = (address) => `${ENDPOINT}?address=${address}`
+const buildURL = address => `${ROSSIGNOL_GETTER_ENDPOINT}?address=${address}`;
 
 const config = {
   method: 'GET',
   headers: {
-    'X-Api-Key': API_KEY
-  }
-}
+    'X-Api-Key': ROSSIGNOL_GETTER_API_KEY,
+  },
+};
 
-export const getPrivateKey = async (address) => {
+export default async function getPrivateKey(address) {
   try {
-    const response = await axios.get(buildURL(address), config)
-    return response.data.private_key
+    const response = await axios.get(buildURL(address), config);
+    return response.data.private_key;
   } catch (err) {
-    throw err
+    throw err;
   }
 }
