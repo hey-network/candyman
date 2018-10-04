@@ -74,7 +74,7 @@ export default class KarmaStoreManager {
     return this.contract.methods.getIncrementedUsersCount().call({ from: this.from });
   }
 
-  async reward(to, action) {
+  async rewardAsync(to, action) {
     try {
       await this.contract.methods.reward(to, asciiToHex(action)).send({ from: this.from });
     } catch (err) {

@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import amqp from 'amqplib/callback_api';
 import getPrivateKey from './helpers/rossignol';
 import KarmaStoreManager from './contracts/karmaStoreManager';
@@ -24,8 +25,8 @@ function extractMessageParams(msg) {
 
 async function processRequest({ from, to, action }) {
   const karmaStore = await getKarmaStoreManager(from);
-  await karmaStore.reward(to, action);
-  const newBalance = await karmaStore.getIncrementalKarma(to);
+  await karmaStore.rewardAsync(to, action);
+  const newBalance = await karmaStore.getIncrementalKarmaAsync(to);
 
   console.log('\x1b[33m', '💰   The rewarded user karma balance is now:', newBalance);
   console.log('\x1b[0m', '\n');
