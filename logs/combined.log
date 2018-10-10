@@ -8945,3 +8945,67 @@
 2018-10-04T16:33:05.883Z [CANDYMAN] info: Received message: 0xd20ea1aaa53781441a00539c9260308c3defec9c 0xc90f3dfd6752434475996f6998f76ea533d67a6g receive_like
 2018-10-04T16:33:05.884Z [CANDYMAN] error: InvalidMessageError: Invalid TO address
 2018-10-10T13:37:19.021Z [CANDYMAN] error: Could not connect to queue: connect ECONNREFUSED 127.0.0.1:5672
+2018-10-10T13:38:12.388Z [CANDYMAN] info: Listening for messages on queue task_queue from amqp://localhost
+2018-10-10T13:38:24.706Z [CANDYMAN] info: Received message: 
+2018-10-10T13:38:24.708Z [CANDYMAN] error: InvalidMessageError: Message must be of the form "FROM TO ACTION" separated by spaces
+2018-10-10T13:39:40.866Z [CANDYMAN] info: Received message: 0x324866ffcabd24346911b1272a1eac252a462a32 0xb4d88f94f8c3ca79bf743ec85f451b5f522f3d31 receive_like
+2018-10-10T13:39:40.867Z [CANDYMAN] debug: User rewarding: 0x324866ffcabd24346911b1272a1eac252a462a32
+2018-10-10T13:39:40.867Z [CANDYMAN] debug: User rewarded: 0xb4d88f94f8c3ca79bf743ec85f451b5f522f3d31
+2018-10-10T13:39:40.867Z [CANDYMAN] debug: Action: receive_like
+2018-10-10T13:39:40.868Z [CANDYMAN] debug: Rossignol request initiated for 0x324866ffcabd24346911b1272a1eac252a462a32
+2018-10-10T13:39:42.357Z [CANDYMAN] debug: Rossignol request for 0x324866ffcabd24346911b1272a1eac252a462a32 had response status 200
+2018-10-10T13:39:42.586Z [CANDYMAN] info: Reward transaction for address 0xb4d88f94f8c3ca79bf743ec85f451b5f522f3d31 at tx 0x1306d7e52de26f21b7b0e16f0245faa461caeac96eac8ee6c1ba4ac6a0e5fb30
+2018-10-10T13:39:50.369Z [CANDYMAN] info: Received message: 0x324866ffcabd24346911b1272a1eac252a462a32 0xb4d88f94f8c3ca79bf743ec85f451b5f522f3d31 receive_lik
+2018-10-10T13:39:50.369Z [CANDYMAN] error: InvalidMessageError: ACTION not included in whitelist
+2018-10-10T14:02:43.333Z [CANDYMAN] debug: User rewarding: 0x324866ffcabd24346911b1272a1eac252a462a32
+2018-10-10T14:02:43.335Z [CANDYMAN] debug: User rewarded: 0x35440595db89302123f6115a2dcf2aa826a0163a
+2018-10-10T14:02:43.335Z [CANDYMAN] debug: Action: receive_like
+2018-10-10T14:02:43.336Z [CANDYMAN] debug: Rossignol request initiated for 0x324866ffcabd24346911b1272a1eac252a462a32
+2018-10-10T14:02:43.347Z [CANDYMAN] debug: Rossignol request for 0x324866ffcabd24346911b1272a1eac252a462a32 had response status 200
+2018-10-10T14:03:45.957Z [CANDYMAN] debug: User rewarding: 0x324866ffcabd24346911b1272a1eac252a462a32
+2018-10-10T14:03:45.958Z [CANDYMAN] debug: User rewarded: 0x35440595db89302123f6115a2dcf2aa826a0163a
+2018-10-10T14:03:45.959Z [CANDYMAN] debug: Action: receive_like
+2018-10-10T14:03:45.959Z [CANDYMAN] debug: Rossignol request initiated for 0x324866ffcabd24346911b1272a1eac252a462a32
+2018-10-10T14:03:45.973Z [CANDYMAN] debug: Rossignol request for 0x324866ffcabd24346911b1272a1eac252a462a32 had response status 200
+2018-10-10T14:04:35.215Z [CANDYMAN] debug: User rewarding: 0x324866ffcabd24346911b1272a1eac252a462a32
+2018-10-10T14:04:35.216Z [CANDYMAN] debug: User rewarded: 0x35440595db89302123f6115a2dcf2aa826a0163a
+2018-10-10T14:04:35.216Z [CANDYMAN] debug: Action: receive_like
+2018-10-10T14:04:35.217Z [CANDYMAN] debug: Rossignol request initiated for 0x324866ffcabd24346911b1272a1eac252a462a32
+2018-10-10T14:05:03.145Z [CANDYMAN] debug: User rewarding: 0x324866ffcabd24346911b1272a1eac252a462a32
+2018-10-10T14:05:03.147Z [CANDYMAN] debug: User rewarded: 0x35440595db89302123f6115a2dcf2aa826a0163a
+2018-10-10T14:05:03.147Z [CANDYMAN] debug: Action: receive_like
+2018-10-10T14:05:03.148Z [CANDYMAN] debug: Rossignol request initiated for 0x324866ffcabd24346911b1272a1eac252a462a32
+2018-10-10T14:05:50.111Z [CANDYMAN] debug: User rewarding: 0x324866ffcabd24346911b1272a1eac252a462a32
+2018-10-10T14:05:50.113Z [CANDYMAN] debug: User rewarded: 0x35440595db89302123f6115a2dcf2aa826a0163a
+2018-10-10T14:05:50.114Z [CANDYMAN] debug: Action: receive_like
+2018-10-10T14:05:50.114Z [CANDYMAN] debug: Rossignol request initiated for 0x324866ffcabd24346911b1272a1eac252a462a32
+2018-10-10T14:05:50.124Z [CANDYMAN] debug: Rossignol request for 0x324866ffcabd24346911b1272a1eac252a462a32 had response status 200
+2018-10-10T14:06:47.313Z [CANDYMAN] debug: User rewarding: 0x324866ffcabd24346911b1272a1eac252a462a32
+2018-10-10T14:06:47.314Z [CANDYMAN] debug: User rewarded: 0x35440595db89302123f6115a2dcf2aa826a0163a
+2018-10-10T14:06:47.314Z [CANDYMAN] debug: Action: receive_like
+2018-10-10T14:06:47.315Z [CANDYMAN] debug: Rossignol request initiated for 0x324866ffcabd24346911b1272a1eac252a462a32
+2018-10-10T14:06:47.328Z [CANDYMAN] debug: Rossignol request for 0x324866ffcabd24346911b1272a1eac252a462a32 had response status 200
+2018-10-10T14:07:14.630Z [CANDYMAN] debug: User rewarding: 0x324866ffcabd24346911b1272a1eac252a462a32
+2018-10-10T14:07:14.631Z [CANDYMAN] debug: User rewarded: 0x35440595db89302123f6115a2dcf2aa826a0163a
+2018-10-10T14:07:14.631Z [CANDYMAN] debug: Action: receive_like
+2018-10-10T14:07:14.632Z [CANDYMAN] debug: Rossignol request initiated for 0x324866ffcabd24346911b1272a1eac252a462a32
+2018-10-10T14:07:14.642Z [CANDYMAN] debug: Rossignol request for 0x324866ffcabd24346911b1272a1eac252a462a32 had response status 200
+2018-10-10T14:07:29.451Z [CANDYMAN] debug: User rewarding: 0x324866ffcabd24346911b1272a1eac252a462a32
+2018-10-10T14:07:29.453Z [CANDYMAN] debug: User rewarded: 0x35440595db89302123f6115a2dcf2aa826a0163a
+2018-10-10T14:07:29.453Z [CANDYMAN] debug: Action: receive_like
+2018-10-10T14:07:29.454Z [CANDYMAN] debug: Rossignol request initiated for 0x324866ffcabd24346911b1272a1eac252a462a32
+2018-10-10T14:07:29.465Z [CANDYMAN] debug: Rossignol request for 0x324866ffcabd24346911b1272a1eac252a462a32 had response status 200
+2018-10-10T14:07:50.725Z [CANDYMAN] debug: User rewarding: 0x324866ffcabd24346911b1272a1eac252a462a32
+2018-10-10T14:07:50.727Z [CANDYMAN] debug: User rewarded: 0x35440595db89302123f6115a2dcf2aa826a0163a
+2018-10-10T14:07:50.727Z [CANDYMAN] debug: Action: receive_like
+2018-10-10T14:07:50.728Z [CANDYMAN] debug: Rossignol request initiated for 0x324866ffcabd24346911b1272a1eac252a462a32
+2018-10-10T14:08:02.861Z [CANDYMAN] debug: User rewarding: 0x324866ffcabd24346911b1272a1eac252a462a32
+2018-10-10T14:08:02.862Z [CANDYMAN] debug: User rewarded: 0x35440595db89302123f6115a2dcf2aa826a0163a
+2018-10-10T14:08:02.862Z [CANDYMAN] debug: Action: receive_like
+2018-10-10T14:08:02.863Z [CANDYMAN] debug: Rossignol request initiated for 0x324866ffcabd24346911b1272a1eac252a462a32
+2018-10-10T14:08:02.874Z [CANDYMAN] debug: Rossignol request for 0x324866ffcabd24346911b1272a1eac252a462a32 had response status 200
+2018-10-10T14:10:19.602Z [CANDYMAN] debug: User rewarding: 0x324866ffcabd24346911b1272a1eac252a462a32
+2018-10-10T14:10:19.603Z [CANDYMAN] debug: User rewarded: 0x35440595db89302123f6115a2dcf2aa826a0163a
+2018-10-10T14:10:19.603Z [CANDYMAN] debug: Action: receive_like
+2018-10-10T14:10:19.604Z [CANDYMAN] debug: Rossignol request initiated for 0x324866ffcabd24346911b1272a1eac252a462a32
+2018-10-10T14:10:19.612Z [CANDYMAN] debug: Rossignol request for 0x324866ffcabd24346911b1272a1eac252a462a32 had response status 200

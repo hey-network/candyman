@@ -1,6 +1,6 @@
 import amqp from 'amqplib/callback_api';
 import logger from './helpers/logger';
-import handleMessage from './messageHandler';
+import { handleMessage } from './messageHandler';
 
 const { QUEUE_ENDPOINT } = process.env;
 

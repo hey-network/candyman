@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "prestart": "eslint --ignore-path .gitignore . --fix",
-    "start": "node -r dotenv/config -r babel-register -r babel-polyfill ./src/index.js"
+    "start": "node -r dotenv/config -r babel-register -r babel-polyfill ./src/index.js",
+    "test": "ROSSIGNOL_GETTER_ENDPOINT=https://example.com/rossignol ROSSIGNOL_GETTER_API_KEY=foo mocha -r babel-register -r babel-polyfill test/messageHandler.spec.js"
   },
   "author": "",
   "license": "ISC",

@@ -1,6 +1,6 @@
-import getPrivateKey from './helpers/rossignol';
-import { actionWhitelisted, KarmaStoreManager } from './contracts/karmaStoreManager';
 import logger from './helpers/logger';
+import { getPrivateKey } from './helpers/rossignol';
+import { actionWhitelisted, KarmaStoreManager } from './contracts/karmaStoreManager';
 import { isAddress } from './helpers/utils';
 
 const PARAMS_COUNT = 3;
@@ -43,9 +43,12 @@ async function processMessage({ from, to, action }) {
   const karmaStore = await getKarmaStoreManager(from);
   const { transactionHash } = await karmaStore.rewardAsync(to, action);
   logger.info(`Reward transaction for address ${to} at tx ${transactionHash}`);
+  return transactionHash;
 }
 
-export default async function handleMessage(msg) {
-  const message = parseMessage(msg);
-  await processMessage(message);
+module.exports = {
+  handleMessage: async function(msg) {
+    const message = parseMessage(msg);
+    return await processMessage(message);
+  }
 }

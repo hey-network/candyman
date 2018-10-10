@@ -4367,3 +4367,5 @@
 2018-10-04T16:03:32.544Z [CANDYMAN] error: InvalidMessageError: Invalid TO address
 2018-10-04T16:33:05.884Z [CANDYMAN] error: InvalidMessageError: Invalid TO address
 2018-10-10T13:37:19.021Z [CANDYMAN] error: Could not connect to queue: connect ECONNREFUSED 127.0.0.1:5672
+2018-10-10T13:38:24.708Z [CANDYMAN] error: InvalidMessageError: Message must be of the form "FROM TO ACTION" separated by spaces
+2018-10-10T13:39:50.369Z [CANDYMAN] error: InvalidMessageError: ACTION not included in whitelist
