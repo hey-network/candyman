@@ -16,6 +16,10 @@ const {
  * Protobuf as the data format protocol.
  * Where request/response parameters were clearly understood, their value has
  * been programmatically calculated (e.g. base64 encoding of the txHash).
+ # Note ultimately that what we are actually faking here are just the underlying
+ * calls from Loom to the Tendermint core, which is used to store the Blockchain
+ * verified data. In the end you can think of Tendermint as an augmented
+ * key/value store ;)
  */
 describe('handleMessage()', () => {
   const fromAddress = '0x324866ffcabd24346911b1272a1eac252a462a32';
@@ -62,10 +66,20 @@ describe('handleMessage()', () => {
       "result":"0"
     });
     // REWARD TRANSACTION SENDING
+    // https://tendermint.readthedocs.io/en/v0.10.4/rpc.html#jsonrpc-http
     nock(SIDECHAIN_ENDPOINT)
       .post('/rpc', {
         "jsonrpc": "2.0",
         "method": "broadcast_tx_commit",
+        // The params object is basically a signed and protobuf-marshalled version
+        // of the following Eth transaction payload. Note that the 'to' field is
+        // the Karma Store smart contract address.
+        // { from: '0x324866ffcabd24346911b1272a1eac252a462a32',
+        //   data:
+        //    '0xfb4101c000000000000000000000000035440595db89302123f6115a2dcf2aa826a0163a726563656976655f6c696b650000000000000000000000000000000000000000',
+        //   gasPrice: undefined,
+        //   gas: undefined,
+        //   to: '0x9635629f2a2f976bd18ce51b83481ca406f55a03' }
         "params": ["CpYBCpEBCAISjAEKHwoHZGVmYXVsdBIUljVinyovl2vRjOUbg0gcpAb1WgMSHwoHZGVmYXVsdBIUMkhm/8q9JDRpEbEnKh6sJSpGKjIaSAgBEkT7QQHAAAAAAAAAAAAAAAAANUQFlduJMCEj9hFaLc8qqCagFjpyZWNlaXZlX2xpa2UAAAAAAAAAAAAAAAAAAAAAAAAAABABEkDBl9svx4U3VJm6f6XtTuTozitNeST8jdDhe4fuFvqQ4lu0yrdIivwsYmFss6x5WZXOxnV9oglvRQVQh3gKBO8BGiD7igJQE1tyOssdQZu9QKMJLI4PlfNWts6OsdPN2GC77Q=="],
         "id":
         "1"
@@ -99,6 +113,7 @@ describe('handleMessage()', () => {
     .reply(200, {
       "jsonrpc": "2.0",
       "id": "2",
+      // Also a protobuf-marshalled result, decoded by Loom in serializeBinaryToWriter
       "result": "CAESFOHn1joGGi9I+n9/hJO3XEUO13C1GP0BMhSWNWKfKi+Xa9GM5RuDSBykBvVaA0gBUiDFaipaqGD2jBcruS/0QT4L64mYLAEaNwzjtmpUAxrMg1ofCgdkZWZhdWx0EhQySGb/yr0kNGkRsScqHqwlKkYqMg=="
     });
 
