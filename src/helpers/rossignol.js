@@ -1,6 +1,5 @@
 import axios from 'axios';
 import logger from './logger';
-import InvalidMessageError from './errors';
 
 const { ROSSIGNOL_GETTER_ENDPOINT, ROSSIGNOL_GETTER_API_KEY } = process.env;
 
@@ -13,6 +12,14 @@ const config = {
   },
 };
 
+class AddressNotFoundError extends Error {
+  constructor(message) {
+    super(message);
+    this.statusCode = 404;
+    this.name = 'AddressNotFoundError';
+  }
+}
+
 export default async function getPrivateKey(address) {
   try {
     logger.debug(`Rossignol request initiated for ${address}`);
@@ -21,7 +28,7 @@ export default async function getPrivateKey(address) {
     return response.data.data.private_key;
   } catch (err) {
     if (err.message.toString().includes(404)) {
-      throw new InvalidMessageError('FROM address does not exist in Rossignol DB');
+      throw new AddressNotFoundError('FROM address does not exist in Rossignol DB');
     } else {
       throw err;
     }

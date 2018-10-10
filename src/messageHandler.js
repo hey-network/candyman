@@ -1,5 +1,5 @@
 import getPrivateKey from './helpers/rossignol';
-import { actionWhitelisted, KarmaStoreManager } from './contracts/karmaStoreManager';
+import { actionWhitelisted, KarmaStoreManager } from './contracts/karmaStoreManager';
 import logger from './helpers/logger';
 import { isAddress } from './helpers/utils';
 
@@ -9,6 +9,7 @@ const PARAMS_SEPARATOR = ' ';
 class InvalidMessageError extends Error {
   constructor(message) {
     super(message);
+    this.statusCode = 400;
     this.name = 'InvalidMessageError';
   }
 }
@@ -44,7 +45,7 @@ async function processMessage({ from, to, action }) {
   logger.info(`Reward transaction for address ${to} at tx ${transactionHash}`);
 }
 
-export async function handleMessage(msg) {
+export default async function handleMessage(msg) {
   const message = parseMessage(msg);
   await processMessage(message);
 }

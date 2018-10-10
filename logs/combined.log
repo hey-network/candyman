@@ -8944,3 +8944,4 @@
 2018-10-04T16:03:32.544Z [CANDYMAN] error: InvalidMessageError: Invalid TO address
 2018-10-04T16:33:05.883Z [CANDYMAN] info: Received message: 0xd20ea1aaa53781441a00539c9260308c3defec9c 0xc90f3dfd6752434475996f6998f76ea533d67a6g receive_like
 2018-10-04T16:33:05.884Z [CANDYMAN] error: InvalidMessageError: Invalid TO address
+2018-10-10T13:37:19.021Z [CANDYMAN] error: Could not connect to queue: connect ECONNREFUSED 127.0.0.1:5672

@@ -4366,3 +4366,4 @@
 2018-10-04T16:03:21.219Z [CANDYMAN] error: InvalidMessageError: FROM address does not exist in Rossignol DB
 2018-10-04T16:03:32.544Z [CANDYMAN] error: InvalidMessageError: Invalid TO address
 2018-10-04T16:33:05.884Z [CANDYMAN] error: InvalidMessageError: Invalid TO address
+2018-10-10T13:37:19.021Z [CANDYMAN] error: Could not connect to queue: connect ECONNREFUSED 127.0.0.1:5672
