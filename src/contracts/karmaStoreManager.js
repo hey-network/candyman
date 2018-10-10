@@ -15,7 +15,17 @@ const {
 const { SIDECHAIN_ENDPOINT, KARMA_CONTRACT_ADDRESS } = process.env;
 const ABI = require('./KarmaStore.json').abi;
 
-export default class KarmaStoreManager {
+const ACTIONS_WHITELIST = [
+  'receive_like',
+  'receive_follower',
+  'invite_user'
+];
+
+export function actionWhitelisted(action) {
+  return ACTIONS_WHITELIST.includes(action);
+}
+
+export class KarmaStoreManager {
   static async createAsync(b64PrivateKey) {
     const privateKey = CryptoUtils.B64ToUint8Array(b64PrivateKey);
     const publicKey = CryptoUtils.publicKeyFromPrivateKey(privateKey);
