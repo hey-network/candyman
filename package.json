@@ -6,7 +6,7 @@
   "scripts": {
     "prestart": "eslint --ignore-path .gitignore . --fix",
     "start": "node -r dotenv/config -r babel-register -r babel-polyfill ./src/index.js",
-    "test": "KARMA_CONTRACT_ADDRESS=0x9635629f2a2f976bd18CE51B83481Ca406F55a03 ROSSIGNOL_GETTER_ENDPOINT=https://example.com/rossignol ROSSIGNOL_GETTER_API_KEY=foo SIDECHAIN_ENDPOINT=http://localhost:46658 mocha -r babel-register -r babel-polyfill test/messageHandler.spec.js"
+    "test": "SIDECHAIN_KARMA_CONTRACT_ADDRESS=0x9635629f2a2f976bd18CE51B83481Ca406F55a03 ROSSIGNOL_GETTER_ENDPOINT=https://example.com/rossignol ROSSIGNOL_GETTER_API_KEY=foo SIDECHAIN_ENDPOINT=http://localhost:46658 mocha -r babel-register -r babel-polyfill test/messageHandler.spec.js"
   },
   "author": "",
   "license": "ISC",

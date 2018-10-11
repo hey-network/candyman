@@ -12,7 +12,7 @@ const {
   LoomProvider
 } = require('loom-js');
 
-const { SIDECHAIN_ENDPOINT, KARMA_CONTRACT_ADDRESS } = process.env;
+const { SIDECHAIN_ENDPOINT, SIDECHAIN_KARMA_CONTRACT_ADDRESS } = process.env;
 const ABI = require('./KarmaStore.json').abi;
 
 const ACTIONS_WHITELIST = [
@@ -53,7 +53,7 @@ export class KarmaStoreManager {
 
     const contract = new web3.eth.Contract(
       ABI,
-      KARMA_CONTRACT_ADDRESS,
+      SIDECHAIN_KARMA_CONTRACT_ADDRESS,
       { from },
     );
 
