@@ -118,8 +118,7 @@ describe('handleMessage()', () => {
     });
 
     const result = await handleMessage(message);
-    // We use .to.eql instead of .to.be.equal as it allows for objects comparison
-    expect(result).to.eql(txHash);
+    expect(result).to.be.equal(txHash);
     // This is an assertion that will fail if any of the nock mocks declared
     // above has not been called in the course of the spec.
     nock.isDone();
