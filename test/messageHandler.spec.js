@@ -25,14 +25,14 @@ describe('handleMessage()', () => {
   const from = '0x324866ffcabd24346911b1272a1eac252a462a32';
   const to = '0x35440595db89302123f6115a2dcf2aa826a0163a';
   const action = 'receive_like';
-  const model = '12345';
+  const model_id = '12345';
 
   const txHashBytes = 'c56a2a5aa860f68c172bb92ff4413e0beb89982c011a370ce3b66a54031acc83';
   const txHash = `0x${txHashBytes}`;
   const b64TxHash = Buffer.from(txHashBytes, 'hex').toString('base64');
 
   const message = {
-    from, to, action, model,
+    from, to, action, model_id,
   };
 
   it('when provided with a correct message, should post a reward transaction to the KarmaStore smart contract', async () => {

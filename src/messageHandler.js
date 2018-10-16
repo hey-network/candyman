@@ -15,7 +15,7 @@ function parseMessage(msg) {
   if (!msg) throw new InvalidMessageError('Cannot parse null message');
 
   const {
-    from, to, action, model,
+    from, to, action, model_id: model,
   } = msg;
 
   if (!from) throw new InvalidMessageError('Missing \'from\' value');
