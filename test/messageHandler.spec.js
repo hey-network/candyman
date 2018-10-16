@@ -74,14 +74,14 @@ describe('handleMessage()', () => {
         method: 'broadcast_tx_commit',
         // The params object is basically a signed and protobuf-marshalled version
         // of the following Eth transaction payload. Note that the 'to' field is
-        // the Karma Store smart contract address.
+        // the Karma Store smart contract address. All of this is directional.
         // { from: '0x324866ffcabd24346911b1272a1eac252a462a32',
         //   data:
         //    '0xfb4101c000000000000000000000000035440595db89302123f6115a2dcf2aa826a0163a726563656976655f6c696b650000000000000000000000000000000000000000',
         //   gasPrice: undefined,
         //   gas: undefined,
         //   to: '0x9635629f2a2f976bd18ce51b83481ca406f55a03' }
-        params: ['CpYBCpEBCAISjAEKHwoHZGVmYXVsdBIUljVinyovl2vRjOUbg0gcpAb1WgMSHwoHZGVmYXVsdBIUMkhm/8q9JDRpEbEnKh6sJSpGKjIaSAgBEkT7QQHAAAAAAAAAAAAAAAAANUQFlduJMCEj9hFaLc8qqCagFjpyZWNlaXZlX2xpa2UAAAAAAAAAAAAAAAAAAAAAAAAAABABEkDBl9svx4U3VJm6f6XtTuTozitNeST8jdDhe4fuFvqQ4lu0yrdIivwsYmFss6x5WZXOxnV9oglvRQVQh3gKBO8BGiD7igJQE1tyOssdQZu9QKMJLI4PlfNWts6OsdPN2GC77Q=='],
+        params: ['CrYBCrEBCAISrAEKHwoHZGVmYXVsdBIUljVinyovl2vRjOUbg0gcpAb1WgMSHwoHZGVmYXVsdBIUMkhm/8q9JDRpEbEnKh6sJSpGKjIaaAgBEmT8M/HVAAAAAAAAAAAAAAAANUQFlduJMCEj9hFaLc8qqCagFjpyZWNlaXZlX2xpa2UAAAAAAAAAAAAAAAAAAAAAAAAAADEyMzQ1AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAESQC95WSkY5o88HS3/f+H2VgqU4DNpwApq23C2qmgdxgTgAxzXGbuVOGCI41L430vmJBQVxiCpuOHptz2+9zTBCwsaIPuKAlATW3I6yx1Bm71Aowksjg+V81a2zo6x083YYLvt'],
         id:
         '1',
       })

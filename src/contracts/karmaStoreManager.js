@@ -87,7 +87,7 @@ export class KarmaStoreManager {
     return this.contract.methods.getIncrementedUsersCount().call({ from: this.from });
   }
 
-  async rewardAsync(to, action) {
-    return this.contract.methods.reward(to, asciiToHex(action)).send({ from: this.from });
+  async rewardAsync(to, action, modelId) {
+    return this.contract.methods.reward(to, asciiToHex(action), asciiToHex(modelId)).send({ from: this.from });
   }
 }
