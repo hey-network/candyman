@@ -1,5 +1,5 @@
 import logger from './helpers/logger';
-import getPrivateKey from './helpers/rossignol';
+import { getPrivateKey } from './helpers/rossignol';
 import { actionWhitelisted, KarmaStoreManager } from './contracts/karmaStoreManager';
 import { isAddress } from './helpers/utils';
 

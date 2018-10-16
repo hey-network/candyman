@@ -35,4 +35,4 @@ async function getPrivateKey(address) {
   }
 }
 
-export default getPrivateKey;
+module.exports.getPrivateKey = getPrivateKey;
