@@ -1,7 +1,7 @@
 import {
   createLogger,
   format,
-  transports
+  transports,
 } from 'winston';
 
 const {
@@ -9,20 +9,20 @@ const {
   timestamp,
   label,
   printf,
-  colorize
+  colorize,
 } = format;
 
 const fileFormat = combine(
   label({ label: 'CANDYMAN' }),
   timestamp(),
-  printf(info => `${info.timestamp} [${info.label}] ${info.level}: ${info.message}`)
+  printf(info => `${info.timestamp} [${info.label}] ${info.level}: ${info.message}`),
 );
 
 const consoleFormat = combine(
   colorize(),
   label({ label: 'CANDYMAN' }),
   timestamp(),
-  printf(info => `${info.timestamp} [${info.label}] ${info.level}: ${info.message}`)
+  printf(info => `${info.timestamp} [${info.label}] ${info.level}: ${info.message}`),
 );
 
 const logger = createLogger({
@@ -30,13 +30,13 @@ const logger = createLogger({
   format: fileFormat,
   transports: [
     new transports.File({ filename: './logs/error.log', level: 'error' }),
-    new transports.File({ filename: './logs/combined.log' })
+    new transports.File({ filename: './logs/combined.log' }),
   ],
 });
 
 if (process.env.NODE_ENV !== 'production') {
   logger.add(new transports.Console({
-    format: consoleFormat
+    format: consoleFormat,
   }));
 }
 

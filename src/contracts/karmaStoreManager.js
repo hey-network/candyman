@@ -9,7 +9,7 @@ const {
   Client,
   LocalAddress,
   CryptoUtils,
-  LoomProvider
+  LoomProvider,
 } = require('loom-js');
 
 const { SIDECHAIN_ENDPOINT, SIDECHAIN_KARMA_CONTRACT_ADDRESS } = process.env;
@@ -18,7 +18,7 @@ const ABI = require('./KarmaStore.json').abi;
 const ACTIONS_WHITELIST = [
   'receive_like',
   'receive_follower',
-  'invite_user'
+  'invite_user',
 ];
 
 export function actionWhitelisted(action) {
@@ -34,7 +34,7 @@ export class KarmaStoreManager {
     const client = new Client(
       'default',
       createJSONRPCClient({ protocols: [{ url: `${SIDECHAIN_ENDPOINT}/rpc` }] }),
-      createJSONRPCClient({ protocols: [{ url: `${SIDECHAIN_ENDPOINT}/query` }] })
+      createJSONRPCClient({ protocols: [{ url: `${SIDECHAIN_ENDPOINT}/query` }] }),
     );
 
     // required middleware

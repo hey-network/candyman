@@ -20,19 +20,19 @@ class AddressNotFoundError extends Error {
   }
 }
 
-module.exports = {
-  getPrivateKey: async function(address) {
-    try {
-      logger.debug(`Rossignol request initiated for ${address}`);
-      const response = await axios.get(buildURL(address), config);
-      logger.debug(`Rossignol request for ${address} had response status ${response.status}`);
-      return response.data.data.private_key;
-    } catch (err) {
-      if (err.message.toString().includes(404)) {
-        throw new AddressNotFoundError('FROM address does not exist in Rossignol DB');
-      } else {
-        throw err;
-      }
+async function getPrivateKey(address) {
+  try {
+    logger.debug(`Rossignol request initiated for ${address}`);
+    const response = await axios.get(buildURL(address), config);
+    logger.debug(`Rossignol request for ${address} had response status ${response.status}`);
+    return response.data.data.private_key;
+  } catch (err) {
+    if (err.message.toString().includes(404)) {
+      throw new AddressNotFoundError('FROM address does not exist in Rossignol DB');
+    } else {
+      throw err;
     }
   }
 }
+
+export default getPrivateKey;

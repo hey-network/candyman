@@ -1,10 +1,7 @@
 import logger from './helpers/logger';
-import { getPrivateKey } from './helpers/rossignol';
+import getPrivateKey from './helpers/rossignol';
 import { actionWhitelisted, KarmaStoreManager } from './contracts/karmaStoreManager';
 import { isAddress } from './helpers/utils';
-
-const PARAMS_COUNT = 3;
-const PARAMS_SEPARATOR = ' ';
 
 class InvalidMessageError extends Error {
   constructor(message) {
@@ -15,23 +12,29 @@ class InvalidMessageError extends Error {
 }
 
 function parseMessage(msg) {
-  const payload = msg.content.toString();
-  const payloadParams = payload.split(PARAMS_SEPARATOR);
+  if (!msg) throw new InvalidMessageError('Cannot parse null message');
 
-  if (payloadParams.length !== PARAMS_COUNT) throw new InvalidMessageError('Message must be of the form "FROM TO ACTION" separated by spaces');
+  const {
+    from, to, action, model,
+  } = msg;
 
-  const [from, to, action] = payloadParams;
-
-  if (!isAddress(from)) throw new InvalidMessageError('Invalid FROM address');
-  if (!isAddress(to)) throw new InvalidMessageError('Invalid TO address');
-  if (from === to) throw new InvalidMessageError('Identical FROM and TO address');
-  if (!actionWhitelisted(action)) throw new InvalidMessageError('ACTION not included in whitelist');
+  if (!from) throw new InvalidMessageError('Missing \'from\' value');
+  if (!isAddress(from)) throw new InvalidMessageError('Invalid \'from\' value');
+  if (!to) throw new InvalidMessageError('Missing \'to\' value');
+  if (!isAddress(to)) throw new InvalidMessageError('Invalid \'to\' value');
+  if (from === to) throw new InvalidMessageError('Identical \'from\' and \'to\' values');
+  if (!action) throw new InvalidMessageError('Missing \'action\' value');
+  if (!actionWhitelisted(action)) throw new InvalidMessageError('Invalid \'action\', not included in whitelist');
+  if (!model) throw new InvalidMessageError('Missing \'model\' value');
 
   logger.debug(`User rewarding: ${from}`);
   logger.debug(`User rewarded: ${to}`);
   logger.debug(`Action: ${action}`);
+  logger.debug(`Model: ${model}`);
 
-  return { from, to, action };
+  return {
+    from, to, action, model,
+  };
 }
 
 async function getKarmaStoreManager(from) {
@@ -46,9 +49,9 @@ async function processMessage({ from, to, action }) {
   return transactionHash;
 }
 
-module.exports = {
-  handleMessage: async function(msg) {
-    const message = parseMessage(msg);
-    return await processMessage(message);
-  }
+async function handleMessage(msg) {
+  const message = parseMessage(msg);
+  return processMessage(message);
 }
+
+exports.handleMessage = handleMessage;
