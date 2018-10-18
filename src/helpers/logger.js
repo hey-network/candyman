@@ -1,25 +1,17 @@
-import {
+const {
   createLogger,
   format,
   transports,
-} from 'winston';
+} = require('winston');
 
 const {
   combine,
   timestamp,
   label,
   printf,
-  colorize,
 } = format;
 
-const fileFormat = combine(
-  label({ label: 'CANDYMAN' }),
-  timestamp(),
-  printf(info => `${info.timestamp} [${info.label}] ${info.level}: ${info.message}`),
-);
-
-const consoleFormat = combine(
-  colorize(),
+const customFormat = combine(
   label({ label: 'CANDYMAN' }),
   timestamp(),
   printf(info => `${info.timestamp} [${info.label}] ${info.level}: ${info.message}`),
@@ -27,17 +19,12 @@ const consoleFormat = combine(
 
 const logger = createLogger({
   level: 'debug',
-  format: fileFormat,
+  format: customFormat,
   transports: [
-    new transports.File({ filename: './logs/error.log', level: 'error' }),
-    new transports.File({ filename: './logs/combined.log' }),
+    new transports.Console({ format: customFormat }),
   ],
 });
 
-if (process.env.NODE_ENV !== 'production') {
-  logger.add(new transports.Console({
-    format: consoleFormat,
-  }));
-}
-
-export default logger;
+module.exports = {
+  logger,
+};

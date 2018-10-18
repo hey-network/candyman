@@ -1,5 +1,5 @@
 loom
-dist
+bin
 npm-debug.log
 node_modules
 .DS_Store
@@ -8,3 +8,5 @@ node_modules
 .env
 combined.log
 error.log
+env.json
+*.zip

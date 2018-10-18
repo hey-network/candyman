@@ -1,7 +1,6 @@
-import Web3 from 'web3';
-import logger from '../helpers/logger';
-import { asciiToHex } from '../helpers/utils';
 
+
+const Web3 = require('web3');
 const {
   createJSONRPCClient,
   NonceTxMiddleware,
@@ -11,8 +10,14 @@ const {
   CryptoUtils,
   LoomProvider,
 } = require('loom-js');
+const { logger } = require('../helpers/logger');
+const { asciiToHex } = require('../helpers/utils');
 
-const { SIDECHAIN_ENDPOINT, SIDECHAIN_KARMA_CONTRACT_ADDRESS } = process.env;
+const {
+  SIDECHAIN_NETWORK,
+  SIDECHAIN_ENDPOINT,
+  SIDECHAIN_KARMA_CONTRACT_ADDRESS,
+} = process.env;
 const ABI = require('./KarmaStore.json').abi;
 
 const ACTIONS_WHITELIST = [
@@ -21,18 +26,17 @@ const ACTIONS_WHITELIST = [
   'invite_user',
 ];
 
-export function actionWhitelisted(action) {
+function actionWhitelisted(action) {
   return ACTIONS_WHITELIST.includes(action);
 }
 
-export class KarmaStoreManager {
+class KarmaStoreManager {
   static async createAsync(b64PrivateKey) {
     const privateKey = CryptoUtils.B64ToUint8Array(b64PrivateKey);
     const publicKey = CryptoUtils.publicKeyFromPrivateKey(privateKey);
 
-
     const client = new Client(
-      'default',
+      SIDECHAIN_NETWORK,
       createJSONRPCClient({ protocols: [{ url: `${SIDECHAIN_ENDPOINT}/rpc` }] }),
       createJSONRPCClient({ protocols: [{ url: `${SIDECHAIN_ENDPOINT}/query` }] }),
     );
@@ -72,22 +76,37 @@ export class KarmaStoreManager {
   }
 
   async getRewardAsync(action) {
-    return this.contract.methods.getReward(asciiToHex(action)).call({ from: this.from });
+    return this.contract.methods
+      .getReward(asciiToHex(action))
+      .call({ from: this.from });
   }
 
   async getKarmaAsync(address) {
-    return this.contract.methods.getKarma(address).call({ from: this.from });
+    return this.contract.methods
+      .getKarma(address)
+      .call({ from: this.from });
   }
 
   async getIncrementalKarmaAsync(address) {
-    return this.contract.methods.getIncrementalKarma(address).call({ from: this.from });
+    return this.contract.methods
+      .getIncrementalKarma(address)
+      .call({ from: this.from });
   }
 
   async getIncrementedUsersCountAsync() {
-    return this.contract.methods.getIncrementedUsersCount().call({ from: this.from });
+    return this.contract.methods
+      .getIncrementedUsersCount()
+      .call({ from: this.from });
   }
 
   async rewardAsync(to, action, modelId) {
-    return this.contract.methods.reward(to, asciiToHex(action), asciiToHex(modelId)).send({ from: this.from });
+    return this.contract.methods
+      .reward(to, asciiToHex(action), asciiToHex(modelId))
+      .send({ from: this.from });
   }
 }
+
+module.exports = {
+  actionWhitelisted,
+  KarmaStoreManager,
+};

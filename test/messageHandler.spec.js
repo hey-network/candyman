@@ -22,6 +22,7 @@ const {
  * key/value store ;)
  */
 describe('handleMessage()', () => {
+  // {"from":"0x324866ffcabd24346911b1272a1eac252a462a32","to":"0x35440595db89302123f6115a2dcf2aa826a0163a","action":"receive_like","model_id":"modelId"}
   const from = '0x324866ffcabd24346911b1272a1eac252a462a32';
   const to = '0x35440595db89302123f6115a2dcf2aa826a0163a';
   const action = 'receive_like';
@@ -81,7 +82,7 @@ describe('handleMessage()', () => {
         //   gasPrice: undefined,
         //   gas: undefined,
         //   to: '0x9635629f2a2f976bd18ce51b83481ca406f55a03' }
-        params: ['CrYBCrEBCAISrAEKHwoHZGVmYXVsdBIUljVinyovl2vRjOUbg0gcpAb1WgMSHwoHZGVmYXVsdBIUMkhm/8q9JDRpEbEnKh6sJSpGKjIaaAgBEmT8M/HVAAAAAAAAAAAAAAAANUQFlduJMCEj9hFaLc8qqCagFjpyZWNlaXZlX2xpa2UAAAAAAAAAAAAAAAAAAAAAAAAAADEyMzQ1AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAESQC95WSkY5o88HS3/f+H2VgqU4DNpwApq23C2qmgdxgTgAxzXGbuVOGCI41L430vmJBQVxiCpuOHptz2+9zTBCwsaIPuKAlATW3I6yx1Bm71Aowksjg+V81a2zo6x083YYLvt'],
+        params: ['CqQBCp8BCAISmgEKFhIUljVinyovl2vRjOUbg0gcpAb1WgMSFhIUMkhm/8q9JDRpEbEnKh6sJSpGKjIaaAgBEmT8M/HVAAAAAAAAAAAAAAAANUQFlduJMCEj9hFaLc8qqCagFjpyZWNlaXZlX2xpa2UAAAAAAAAAAAAAAAAAAAAAAAAAADEyMzQ1AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAESQPKag69B0mXBbWKoDohif8KNAOH0HEYRPechcP4PvES6LStXk18RklIzJVshyX3AXiO3DQWf2Q9/Hd+3xX2wkwsaIPuKAlATW3I6yx1Bm71Aowksjg+V81a2zo6x083YYLvt'],
         id:
         '1',
       })

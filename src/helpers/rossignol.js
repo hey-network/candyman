@@ -1,5 +1,5 @@
-import axios from 'axios';
-import logger from './logger';
+const axios = require('axios');
+const { logger } = require('./logger');
 
 const { ROSSIGNOL_GETTER_ENDPOINT, ROSSIGNOL_GETTER_API_KEY } = process.env;
 
@@ -35,4 +35,6 @@ async function getPrivateKey(address) {
   }
 }
 
-module.exports.getPrivateKey = getPrivateKey;
+module.exports = {
+  getPrivateKey,
+};

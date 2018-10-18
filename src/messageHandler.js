@@ -1,7 +1,7 @@
-import logger from './helpers/logger';
-import { getPrivateKey } from './helpers/rossignol';
-import { actionWhitelisted, KarmaStoreManager } from './contracts/karmaStoreManager';
-import { isAddress } from './helpers/utils';
+const { logger } = require('./helpers/logger');
+const { getPrivateKey } = require('./helpers/rossignol');
+const { actionWhitelisted, KarmaStoreManager } = require('./contracts/karmaStoreManager');
+const { isAddress } = require('./helpers/utils');
 
 class InvalidMessageError extends Error {
   constructor(message) {
@@ -56,4 +56,6 @@ async function handleMessage(msg) {
   return processMessage(message);
 }
 
-exports.handleMessage = handleMessage;
+module.exports = {
+  handleMessage,
+};
