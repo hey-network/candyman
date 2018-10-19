@@ -26,6 +26,14 @@ const ACTIONS_WHITELIST = [
   'invite_user',
 ];
 
+class InsufficientKarmaError extends Error {
+  constructor(message) {
+    super(message);
+    this.statusCode = 401;
+    this.name = 'InsufficientKarmaError';
+  }
+}
+
 function actionWhitelisted(action) {
   return ACTIONS_WHITELIST.includes(action);
 }
@@ -100,9 +108,19 @@ class KarmaStoreManager {
   }
 
   async rewardAsync(to, action, modelId) {
-    return this.contract.methods
-      .reward(to, asciiToHex(action), asciiToHex(modelId))
-      .send({ from: this.from });
+    try {
+      return this.contract.methods
+        .reward(to, asciiToHex(action), asciiToHex(modelId))
+        .send({ from: this.from });
+    } catch(err) {
+      console.log('WAS HERE')
+      console.log(err.toString())
+      if (err.toString().includes('origin has no karma')) {
+        throw new InsufficientKarmaError('sending address has no karma');
+      } else {
+        throw err;
+      }
+    }
   }
 }
 

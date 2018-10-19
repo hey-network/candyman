@@ -11,17 +11,17 @@ exports.handler = async (event, context, callback) => {
     // Note that callback is of the form (err, res), so if we pass null
     // as first argument it is considered a success.
     logger.info('Successfully processed message');
-    callback(null, 'success');
-  } catch(error) {
-    if (err.name === 'InvalidMessageError') {
-      logger.error(err.toString());
+    callback(null, 'message processed');
+  } catch(err) {
+    if (['InvalidMessageError', 'InsufficientKarmaError'].includes(err.name)) {
+      logger.error(`Caught error ${err.name}: ${err.toString()}`);
       // Delete the message since it is invalid.
-      callback(null, err.toString());
+      callback(null, 'message deleted');
     } else {
       // Fail so the message gets re-enqueued, by passing a non-null first
       // argument in the callback.
-      logger.error(err.toString());
-      callback(err.toString());
+      logger.error(`Caught error ${err.name}: ${err.toString()}`);
+      callback('message reenqueued');
     }
   }
 };
