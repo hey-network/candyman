@@ -1,27 +1,26 @@
 const { logger } = require('./helpers/logger');
 const { handleMessage } = require('./messageHandler');
 
-exports.handler = async (event, context, callback) => {
+exports.handler = async (event) => {
   const { body } = event.Records[0];
   logger.info(`Received message: ${body}`);
   const message = JSON.parse(body);
   try {
-    await handleMessage(message);
+    const txHash = await handleMessage(message);
     // By default if Lambda terminates gracefully, SQS deletes the message.
     // Note that callback is of the form (err, res), so if we pass null
     // as first argument it is considered a success.
-    logger.info('Successfully processed message');
-    callback(null, 'message processed');
-  } catch(err) {
+    logger.info(`Message processed: broadcast at Tx ${txHash}`);
+    return { txHash };
+  } catch (err) {
     if (['InvalidMessageError', 'InsufficientKarmaError'].includes(err.name)) {
-      logger.error(`Caught error ${err.name}: ${err.toString()}`);
+      logger.error(`Message deleted: caught error ${err.toString()}`);
       // Delete the message since it is invalid.
-      callback(null, 'message deleted');
-    } else {
-      // Fail so the message gets re-enqueued, by passing a non-null first
-      // argument in the callback.
-      logger.error(`Caught error ${err.name}: ${err.toString()}`);
-      callback('message reenqueued');
+      return {};
     }
+    // Fail so the message gets re-enqueued, by passing a non-null first
+    // argument in the callback.
+    logger.error(`Message sent back to queue: caught error ${err.toString()}`);
+    throw err;
   }
 };

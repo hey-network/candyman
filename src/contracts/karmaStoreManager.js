@@ -109,12 +109,12 @@ class KarmaStoreManager {
 
   async rewardAsync(to, action, modelId) {
     try {
-      return this.contract.methods
+      // We use return on await here because we want to catch the error from
+      // here, not from the calling function.
+      return await this.contract.methods
         .reward(to, asciiToHex(action), asciiToHex(modelId))
         .send({ from: this.from });
-    } catch(err) {
-      console.log('WAS HERE')
-      console.log(err.toString())
+    } catch (err) {
       if (err.toString().includes('origin has no karma')) {
         throw new InsufficientKarmaError('sending address has no karma');
       } else {

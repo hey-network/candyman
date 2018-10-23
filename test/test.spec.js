@@ -1,7 +1,7 @@
 const { describe, it } = require('mocha');
 const { expect } = require('chai');
 const nock = require('nock');
-const { handleMessage } = require('../src/messageHandler');
+const { handler } = require('../src');
 
 const {
   ROSSIGNOL_GETTER_ENDPOINT,
@@ -21,19 +21,27 @@ const {
  * verified data. In the end you can think of Tendermint as an augmented
  * key/value store ;)
  */
-describe('handleMessage()', () => {
+describe('handler()', () => {
   // {"from":"0x324866ffcabd24346911b1272a1eac252a462a32","to":"0x35440595db89302123f6115a2dcf2aa826a0163a","action":"receive_like","model_id":"modelId"}
-  const from = '0x324866ffcabd24346911b1272a1eac252a462a32';
-  const to = '0x35440595db89302123f6115a2dcf2aa826a0163a';
+  const to = '0x324866ffcabd24346911b1272a1eac252a462a32';
+  const from = '0x35440595db89302123f6115a2dcf2aa826a0163a';
   const action = 'receive_like';
   const model_id = '12345';
 
   const txHashBytes = 'c56a2a5aa860f68c172bb92ff4413e0beb89982c011a370ce3b66a54031acc83';
-  const txHash = `0x${txHashBytes}`;
+  const expectedTxHash = `0x${txHashBytes}`;
   const b64TxHash = Buffer.from(txHashBytes, 'hex').toString('base64');
 
   const message = {
     from, to, action, model_id,
+  };
+
+  const event = {
+    Records: [
+      {
+        body: JSON.stringify(message),
+      },
+    ],
   };
 
   it('when provided with a correct message, should post a reward transaction to the KarmaStore smart contract', async () => {
@@ -82,7 +90,7 @@ describe('handleMessage()', () => {
         //   gasPrice: undefined,
         //   gas: undefined,
         //   to: '0x9635629f2a2f976bd18ce51b83481ca406f55a03' }
-        params: ['CqQBCp8BCAISmgEKFhIUljVinyovl2vRjOUbg0gcpAb1WgMSFhIUMkhm/8q9JDRpEbEnKh6sJSpGKjIaaAgBEmT8M/HVAAAAAAAAAAAAAAAANUQFlduJMCEj9hFaLc8qqCagFjpyZWNlaXZlX2xpa2UAAAAAAAAAAAAAAAAAAAAAAAAAADEyMzQ1AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAESQPKag69B0mXBbWKoDohif8KNAOH0HEYRPechcP4PvES6LStXk18RklIzJVshyX3AXiO3DQWf2Q9/Hd+3xX2wkwsaIPuKAlATW3I6yx1Bm71Aowksjg+V81a2zo6x083YYLvt'],
+        params: ['CsoBCsUBCAISwAEKKQoRZXh0ZGV2LXBsYXNtYS11czESFJY1Yp8qL5dr0YzlG4NIHKQG9VoDEikKEWV4dGRldi1wbGFzbWEtdXMxEhQySGb/yr0kNGkRsScqHqwlKkYqMhpoCAESZPwz8dUAAAAAAAAAAAAAAAA1RAWV24kwISP2EVotzyqoJqAWOnJlY2VpdmVfbGlrZQAAAAAAAAAAAAAAAAAAAAAAAAAAMTIzNDUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQARJAmzHDbo1iuO1eafJ5Fk7RcwjWPHUFWheFP8fDM9vNU2zIrdawJ+6D96DhkW1TEacJuj7d6z3Su0lLPI3NV0akDBog+4oCUBNbcjrLHUGbvUCjCSyOD5XzVrbOjrHTzdhgu+0='],
         id:
         '1',
       })
@@ -119,8 +127,8 @@ describe('handleMessage()', () => {
         result: 'CAESFOHn1joGGi9I+n9/hJO3XEUO13C1GP0BMhSWNWKfKi+Xa9GM5RuDSBykBvVaA0gBUiDFaipaqGD2jBcruS/0QT4L64mYLAEaNwzjtmpUAxrMg1ofCgdkZWZhdWx0EhQySGb/yr0kNGkRsScqHqwlKkYqMg==',
       });
 
-    const result = await handleMessage(message);
-    expect(result).to.be.equal(txHash);
+    const { txHash } = await handler(event);
+    expect(txHash).to.be.equal(expectedTxHash);
     // This is an assertion that will fail if any of the nock mocks declared
     // above has not been called in the course of the spec.
     nock.isDone();

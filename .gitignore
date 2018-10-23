@@ -1,12 +1,4 @@
-loom
-bin
-npm-debug.log
 node_modules
 .DS_Store
-.production
-.key
 .env
-combined.log
-error.log
-env.json
 *.zip
