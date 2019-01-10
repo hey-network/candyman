@@ -46,9 +46,9 @@ async function processMessage({
   from, to, action, model,
 }) {
   const karmaStore = await getKarmaStoreManager(from);
-  const { transactionHash } = await karmaStore.rewardAsync(to, action, model);
+  const { transactionHash, blockNumber } = await karmaStore.rewardAsync(to, action, model);
   logger.info(`Reward transaction for address ${to} at tx ${transactionHash}`);
-  return transactionHash;
+  return { transactionHash, blockNumber };
 }
 
 async function handleMessage(msg) {

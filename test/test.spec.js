@@ -30,7 +30,8 @@ describe('handler()', () => {
   const model_id = '12345';
 
   const txHashBytes = 'c56a2a5aa860f68c172bb92ff4413e0beb89982c011a370ce3b66a54031acc83';
-  const expectedTxHash = `0x${txHashBytes}`;
+  const expectedTransactionHash = `0x${txHashBytes}`;
+  const expectedBlockNumber = 253;
   const b64TxHash = Buffer.from(txHashBytes, 'hex').toString('base64');
 
   const message = {
@@ -91,7 +92,8 @@ describe('handler()', () => {
         //   gasPrice: undefined,
         //   gas: undefined,
         //   to: '0x9635629f2a2f976bd18ce51b83481ca406f55a03' }
-        params: ['Cs8BCsoBCAISxQEKKQoRZXh0ZGV2LXBsYXNtYS11czESFORkFEJFw+D6Pa4KSyVdCjBvQLfVEikKEWV4dGRldi1wbGFzbWEtdXMxEhQySGb/yr0kNGkRsScqHqwlKkYqMhptCAESZPwz8dUAAAAAAAAAAAAAAAAySGb/yr0kNGkRsScqHqwlKkYqMnJlY2VpdmVfbGlrZQAAAAAAAAAAAAAAAAAAAAAAAAAAMTIzNDUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAaAwoBABABEkDXI3kdM7OF4qBZhjS/h9L9pDNv6baDHUL9VEjMtzZU5m+3BtxvMOOC9l8SKKMKrV5UFrxn/zV6Ir3LMAqhTQMEGiD7igJQE1tyOssdQZu9QKMJLI4PlfNWts6OsdPN2GC77Q=='],
+        // Note that this regularly needs to be updated for timing considerations...
+        params: ['Cs8BCsoBCAISxQEKKQoRZXh0ZGV2LXBsYXNtYS11czESFO4tly7IZj9Pg/h/w63iBd2ruWxbEikKEWV4dGRldi1wbGFzbWEtdXMxEhQySGb/yr0kNGkRsScqHqwlKkYqMhptCAESZPwz8dUAAAAAAAAAAAAAAAAySGb/yr0kNGkRsScqHqwlKkYqMnJlY2VpdmVfbGlrZQAAAAAAAAAAAAAAAAAAAAAAAAAAMTIzNDUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAaAwoBABABEkDsAmDhyYMhooOuoVxZFz7QEnSrMCkvq4BC7Xffqs6q4+DWml9gSVOshXTz9n0EDktzixezoXckt8QPBB9tOkkDGiD7igJQE1tyOssdQZu9QKMJLI4PlfNWts6OsdPN2GC77Q=='],
         id:
         '1',
       })
@@ -128,8 +130,9 @@ describe('handler()', () => {
         result: 'CAESFOHn1joGGi9I+n9/hJO3XEUO13C1GP0BMhSWNWKfKi+Xa9GM5RuDSBykBvVaA0gBUiDFaipaqGD2jBcruS/0QT4L64mYLAEaNwzjtmpUAxrMg1ofCgdkZWZhdWx0EhQySGb/yr0kNGkRsScqHqwlKkYqMg==',
       });
 
-    const { txHash } = await handler(event);
-    expect(txHash).to.be.equal(expectedTxHash);
+    const { transactionHash, blockNumber } = await handler(event);
+    expect(transactionHash).to.be.equal(expectedTransactionHash);
+    expect(blockNumber).to.be.equal(expectedBlockNumber);
     // This is an assertion that will fail if any of the nock mocks declared
     // above has not been called in the course of the spec.
     nock.isDone();
